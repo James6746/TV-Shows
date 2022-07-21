@@ -65,9 +65,8 @@ class MainActivity : AppCompatActivity() {
     private fun initObserves() {
         // Retrofit Related
         viewModel.tvShowsFromApi.observe(this) {
-            Logger.d(TAG, it!!.size.toString())
-            adapter.setNewTVShows(it)
-
+            Logger.d(TAG, it!!.toString())
+            adapter.updateEmployeeListItems(it)
         }
 
         viewModel.tvShowDetails.observe(this) {
