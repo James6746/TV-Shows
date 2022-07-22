@@ -7,56 +7,30 @@
     android:background="@color/black"
     tools:context=".activity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/black"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@string/app_name" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_horizontal"
-        android:padding="10dp">
-
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/b_fab"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_arrow_up"
-        app:backgroundTint="@color/teal_700"
-        app:fabSize="mini"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center_horizontal|bottom"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:tint="@android:color/white" />
+        app:cardCornerRadius="50dp">
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_margin="-1dp"
+            android:id="@+id/tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            app:tabIndicatorGravity="stretch"
+            app:tabSelectedTextColor="@color/white" />
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

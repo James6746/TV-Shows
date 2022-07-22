@@ -1,5 +1,8 @@
 package com.example.android_imperative.di
 
+import android.app.Application
+import com.example.android_imperative.db.AppDatabase
+import com.example.android_imperative.db.TVShowDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +35,17 @@ class AppModule {
     fun tvShowService() = retrofitClient().create(TVShowService::class.java)
 
     //Room related
+    @Provides
+    @Singleton
+    fun appDatabase(context: Application): AppDatabase{
+        return AppDatabase.getAppDBInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun tvShowDao(appDatabase: AppDatabase): TVShowDao{
+        return appDatabase.getTVShowDao()
+    }
 
 
 }

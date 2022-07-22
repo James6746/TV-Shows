@@ -1,16 +1,20 @@
 package com.example.android_imperative.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android_imperative.model.TVShow
 import com.example.android_imperative.model.TVShowDetails
 import com.example.android_imperative.model.TVShowPopular
 import com.example.android_imperative.repository.TVShowRepository
+import com.example.android_imperative.utils.Logger.Companion.d
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.logging.Logger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +26,8 @@ class MainViewModel @Inject constructor(private val tvShowRepository: TVShowRepo
     val tvShowsFromApi = MutableLiveData<ArrayList<TVShow>>()
     val tvShowPopular = MutableLiveData<TVShowPopular>()
     val tvShowDetails = MutableLiveData<TVShowDetails>()
+
+    val tvShowsFromDB = MutableLiveData<List<TVShow>>()
 
 
     /**
@@ -73,4 +79,25 @@ class MainViewModel @Inject constructor(private val tvShowRepository: TVShowRepo
     /**
      * Room Related
      */
+
+    fun getTVShowsFromDB() {
+        viewModelScope.launch {
+            val tvShows = tvShowRepository.getTVShowsFromDB()
+            tvShowsFromDB.postValue(tvShows)
+        }
+    }
+
+    fun deleteTVShowsFromDB() {
+        viewModelScope.launch {
+            tvShowRepository.deleteTvShowsFromDB()
+        }
+    }
+
+    fun insertTVShowToDB(tvShow: TVShow) {
+        viewModelScope.launch {
+            tvShowRepository.insertTVShowToDB(tvShow)
+        }
+    }
+
+
 }

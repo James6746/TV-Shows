@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.android_imperative.R
-import com.example.android_imperative.activity.MainActivity
+import com.example.android_imperative.fragments.AllMovies
+import com.example.android_imperative.fragments.BaseFragment
 import com.example.android_imperative.model.TVShow
 
 
-class TVShowAdapter(private var activity: MainActivity, private var items: ArrayList<TVShow>) :
+class TVShowAdapter(private var fragment: BaseFragment, private var items: ArrayList<TVShow>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -30,14 +32,18 @@ class TVShowAdapter(private var activity: MainActivity, private var items: Array
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val tvShow: TVShow = items[position]
         if (holder is TVShowViewHolder) {
-            Glide.with(activity).load(tvShow.image_thumbnail_path).placeholder(R.drawable.im_movie)
+            Glide.with(fragment).load(tvShow.image_thumbnail_path).placeholder(R.drawable.im_movie)
                 .into(holder.iv_movie)
             holder.tv_name.text = tvShow.name
             holder.tv_type.text = tvShow.network
 
             ViewCompat.setTransitionName(holder.iv_movie, tvShow.name)
+
             holder.iv_movie.setOnClickListener {
-//                activity.callDetailsActivity(tvShow, holder.iv_movie)
+                if(fragment is AllMovies){
+                    (fragment as AllMovies).viewModel.insertTVShowToDB(tvShow)
+                }
+                (fragment).callDetailsActivity(tvShow, holder.iv_movie)
             }
         }
     }
@@ -61,6 +67,4 @@ class TVShowAdapter(private var activity: MainActivity, private var items: Array
             tv_type = view.findViewById(R.id.tv_type)
         }
     }
-
-
 }
